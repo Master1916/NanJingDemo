@@ -1,0 +1,320 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<meta http-equiv="Content-type" name="viewport" charset="UTF-8"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+<title>网络流量</title>
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+ <link rel="stylesheet" href="index.css" />
+<script src="jquery.mobile/jquery-1.7.2.min"></script>
+<script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="index.js"></script>
+ 
+</head>
+
+<body>
+	<div data-role="page" id="page-home" class="type-interior"
+		data-theme="b">
+
+		<div data-role="header" id="header"  data-theme="b" data-position="fixed">
+			<h1>运维指标</h1>
+			<a href="#" data-icon="home" data-iconpos="notext" id="intro"class="ui-btn-right">intro</a>
+		</div>
+
+		<div data-role="content" >
+			<canvas id="myCanvas" style="border: 1px solid #c3c3c3; padding=0px;     
+           margin=0px;">
+          Your browser does not support the canvas element.
+           </canvas>
+
+
+<!-- 1. 从1开始 至 任意值
+parseInt(Math.random()*上限+1); 
+
+2. 从任意值开始 至 任意值
+parseInt(Math.random()*(上限-下限+1)+下限); -->
+			<script type="text/javascript">
+				var c = document.getElementById("myCanvas");
+				var context = c.getContext("2d");
+				
+ 				c.height=screen.height*0.8;
+ 				c.width=screen.width;
+ 				
+ 				context.beginPath();//定义了一个新的路径绘制动作的开始。
+
+
+ 				var j=10;
+ 				//画竖线
+ 				 for( var i=0;i<=25;i++){
+ 					 if(i%5==0){
+ 						context.font="normal 10pt Calibri";
+ 						context.textAlign="center";
+ 						context.fillText(i,50+j*i,320);
+ 						
+ 						context.moveTo(50+j*i, 308);
+ 	 					context.lineTo(50+j*i, 10);
+ 						}  
+ 					context.moveTo(50+j*i, 300);
+ 					context.lineTo(50+j*i, 10);
+ 					 
+ 				 }
+ 				var k=10;
+ 				//画横线
+				for(var i=0;i<30;i++){
+					if(i%5==0){
+						context.font="normal 10pt Calibri";
+ 						context.textAlign="center";
+ 						context.fillText(i,30, 300-k*i);
+ 						
+ 						context.moveTo(42, 300-k*i);
+ 						context.lineTo(250, 300-k*i);
+					}
+					context.moveTo(50, 300-k*i);
+					context.lineTo(300, 300-k*i);
+				}
+ 				
+				context.stroke();
+				
+				point(context,0,28);
+				
+				transfromx(context,"时间(H)",170,340);
+				transfromy(context,"流量(Mbps)",20,140);
+				
+				//Y轴上面的文字描述
+				function transfromy(context,str,x,y){
+					context.beginPath();
+					context.transform(0,-1,1,0,x,y);
+					context.font="normal 10pt Calibri";
+					context.fillText(str,1,-1);
+					context.stroke();
+				}
+				//X轴上面的文字描述
+				function transfromx(context,str,x,y){
+					context.beginPath();
+					context.font="normal 10pt Calibri";
+					context.fillText(str,x,y);
+					context.stroke();
+					
+				}
+				//获得一个坐标在画布上的像素x轴坐标
+				//x 表示一个坐标x轴的值
+				function getxpixel(x){
+					return 10*(x-1)+60;
+				}
+				//获得一个坐标在画布上的像素y轴的坐标
+				//y表示一个坐标值
+				function getypixel(y){
+					return 300-10*y;
+				}
+				//随机生成一个坐标的x坐标
+			   function randomxpoint(xmin,xmax){
+				   return parseInt(Math.random()*(xmax-xmin+1)+xmin); //随机获得一个点的x坐标的值
+			   }	
+				//随机生成一个坐标的y坐标
+			  function randomypoint(ymin,ymax){
+				  return parseInt(Math.random()*(ymax-ymin+1)+ymin);//随机获得一个点的y坐标的值
+			  }
+				
+			 //画点 随机生成这些点
+			  function point(context,ymin,ymax){
+				context.beginPath();
+				 for(var i=0;i<25;i++){
+					 
+						var y=randomypoint(ymin,ymax);
+						var y_pixle=getypixel(y);
+						var x_pixle=getxpixel(i);
+						
+					
+					 	context.fillStyle="#ff0000"
+					 	context.fillText("*",x_pixle, y_pixle);
+						 
+						context.strokeStyle="#ff0000"
+						context.lineTo(x_pixle,y_pixle);
+						
+				}
+				 context.stroke();
+				 }
+			
+			</script>
+
+
+		</div>
+
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<div data-role="navbar" >
+				<ul>
+					<li><a href="#page-home" data-icon="back">网络流量</a></li>
+					<li><a href="#page-home1" data-icon="back">运维指标</a></li>
+					<li><a href="#page-home2" data-icon="star">病毒统计</a></li>
+					 
+				</ul>
+			</div>
+
+		</div>
+	</div>
+<!-- 运维指标页面  -->
+	<div data-role="page" id="page-home1" class="type-interior"
+		data-theme="b">
+
+		<div data-role="header" id="header"  data-theme="b" data-position="fixed">
+			<h1 >运维指标</h1>
+			<a href="#" data-icon="home" data-iconpos="notext" id="intro"
+				class="ui-btn-right">intro</a>
+		</div>
+
+		<div data-rovale="content" >
+		 
+        	<canvas id="canvas1" style="border: 1px solid #c3c3c3;">
+                   Your browser does not support the canvas element.
+           </canvas>
+		 
+           <script type="text/javascript">
+           var c=document.getElementById("canvas1");
+           var context=c.getContext("2d");
+           
+           c.height=screen.height*0.8;
+		   c.width=screen.width;
+           
+		   var centerX = 150;
+		   var centerY = 300;
+		   var radius = 70;
+		   context.beginPath();
+		   context.arc(centerX, centerY, radius, 0, 1 * Math.PI, false);
+		   context.fillStyle = "#ff0000";
+		   context.fill();
+		   context.lineWidth =1;
+		   context.strokeStyle = "black";
+		   context.stroke();
+  
+           </script>
+		</div>
+		
+
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<div data-role="navbar" >
+				<ul>
+					<li><a href="#page-home" data-icon="back">网络流量</a></li>
+					<li><a href="#page-home1" data-icon="back">运维指标</a></li>
+					<li><a href="#page-home2" data-icon="star">病毒统计</a></li>
+					 
+				</ul>
+			</div>
+
+		</div>
+	</div>
+<!-- 病毒统计页面  -->
+	<div data-role="page" onload="init()" id="page-home2" class="type-interior"
+		data-theme="b">
+
+		<div data-role="header" id="header"  data-theme="b" data-position="fixed">
+			<h1 >病毒统计</h1>
+			<a href="#" data-icon="home" data-iconpos="notext" id="intro"
+				class="ui-btn-right">intro</a>
+		</div>
+
+		<div data-role="content" >
+		 
+           <canvas id="graph"style="border: 1px solid #c3c3c3;"></canvas>
+
+		</div>
+
+		<script type="text/javascript">
+			//初始化并填充数据
+
+			function init() {
+				var data = [ {
+					year : "2007",
+					sales : 49
+				}, {
+					year : "2008",
+					sales : 131
+				}, {
+					year : "2009",
+					sales : 294
+				}, {
+					year : "2010",
+					sales : 405
+				} ];
+
+				var report = {
+					x : "year",
+					y : "sales",
+					values : data
+				};
+
+				graph(report, 350, 300);
+			}
+			/*
+			 *@method 生成柱状图数据报表
+			 *@author Xiangliang Kong
+			 *@date 2012-02-16
+			 */
+			function graph(report, maxWidth, maxHeight) {
+				var data = report.values;
+				var canvas = document.getElementById("graph");
+				var axisBuffer = 20;
+
+				canvas.height = screen.height;
+				canvas.width = screen.width;
+				var ctx = canvas.getContext("2d"); //<canvas>标签获取一个2D矩阵
+				//ctx.fillStyle='#FF0000';         //给矩阵描绘颜色
+				//ctx.fillRect(0,0,80,100);       //给矩阵定义宽高
+				var width = 50;
+				var buffer = 20;
+				var i = 0;
+				var x = buffer + axisBuffer;
+				ctx.font = "bold 12px sans-serif";
+				ctx.textAlign = "start";
+				
+				for (i = 0; i < data.length; i++) {
+					ctx.fillStyle = "rgba(0, 0, 200, 0.9)";
+					ctx.fillRect(x, maxHeight - (data[i][report.y] / 2), width,
+							(data[i][report.y] / 2));
+					ctx.fillStyle = "rgba(0, 0, 0, 0.9)";
+					ctx.fillText(data[i][report.x], x + (width / 4),maxHeight + 15);
+					x += width + buffer;
+					// draw the horizontal axis
+					ctx.moveTo(axisBuffer, maxHeight);
+					ctx.lineTo(axisBuffer + maxWidth, maxHeight);
+					ctx.strokeStyle = "black";
+					ctx.stroke();
+
+					// draw the vertical axis
+					ctx.moveTo(axisBuffer, 0);
+					ctx.lineTo(axisBuffer, maxHeight);
+					ctx.stroke();
+
+				}
+			}
+		</script>
+
+
+
+
+
+
+
+
+
+
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<div data-role="navbar" >
+				<ul>
+					<li><a href="#page-home"  data-transition="slide" data-icon="back">网络流量</a></li>
+					<li><a href="#page-home1"  data-transition="slide"   data-icon="back">运维指标</a></li>
+					<li><a href="#page-home2"  data-transition="slide"  data-icon="star">病毒统计</a></li>
+					 
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+</body>
+</html>

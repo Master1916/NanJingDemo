@@ -1,0 +1,77 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<meta http-equiv="Content-type" name="viewport" charset="UTF-8"
+	content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+<title>运维指标</title>
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+ <link rel="stylesheet" href="index.css" />
+<script src="jquery.mobile/jquery-1.7.2.min"></script>
+<script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="index.js"></script>
+<script type="text/javascript" charset="utf-8" src="index1.js"></script>
+</head>
+
+<body>
+<!-- 病毒统计页面  -->
+	<div data-role="page" id="page-home2" class="type-interior"
+		data-theme="b">
+
+		<div data-role="header" id="header"  data-theme="b" data-position="fixed">
+			<h1 id=header1>运维指标</h1>
+			<a href="#" data-icon="home" data-iconpos="notext" id="intro"
+				class="ui-btn-right">intro</a>
+		</div>
+
+		<div data-role="content" >
+		 
+           <canvas id="myCanvas" style="border: 1px solid #c3c3c3; padding=0px;     
+           margin=0px;    ">
+          Your browser does not support the canvas element.
+           </canvas>
+
+		</div>
+		<script type="text/javascript">
+				var c = document.getElementById("myCanvas");
+				var context = c.getContext("2d");
+				
+ 				c.height=screen.height;
+ 				c.width=screen.width;
+ 				var x=c.height/2;
+ 				var y=c.width/2;
+ 				context.transform(0,1,-1,0,80,70);
+
+				context.font="normal 10pt Calibri";
+				context.textAlign="center";
+				context.fillText("流",160,140);
+				context.fillText("量",160,160);
+				context.fillText("（",160,180);
+				context.fillText(")",160,200);
+ 				
+				context.stroke();
+				
+				
+				</script>
+				
+
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<div data-role="navbar" >
+				<ul>
+					<li><a href="#page-home"  data-transition="slide" data-icon="back">网络流量</a></li>
+					<li><a href="#page-home1"  data-transition="slide"   data-icon="back">运维指标</a></li>
+					<li><a href="#page-home2"  data-transition="slide"  data-icon="star">病毒统计</a></li>
+					 
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+</body>
+</html>
