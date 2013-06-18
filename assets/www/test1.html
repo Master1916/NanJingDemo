@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>测试</title>
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.3.0.min.css" />
+<script src="jquery.mobile/jquery.js"></script>
+<script src="jquery.mobile/jquery.mobile-1.3.0.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+
+	
+</head>
+
+<body>
+	<div data-role="page" id="page">
+		<div data-role="header" id=header>
+		<h1 id="head">jdh</h1>
+		</div>
+		<div data-role="content" id="myCanvas" style="padding:0px; margin:0px">
+		 
+	   <canvas   style="border: 1px solid #fff000"></canvas>
+		<script type="text/javascript">
+		//实现左右滑动的实现方法
+		$(function() {
+			$("footer").bind('swiperight', function() {
+			  $.mobile.changePage("#test", {transition: "slide", reverse:true},false);
+			 }).bind('swipeleft', function() {
+			   $.mobile.changePage("#test2", { transition: "slide"},true);
+			});
+			}); 
+			 
+
+			   /*  $.mobile.changePage("save.html",
+			                        {type:"post",
+			                        data:$("form#dataFrm").serialize(),
+			                        transition:"slide"}
+			                        );  */
+		</script>
+		</div>
+		<div data-role="footer" id="footer">
+	   <h1>footer</h1>
+	   
+		</div>
+	</div>
+</body>
+</html>
+

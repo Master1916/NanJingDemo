@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>选择查看模式</title>
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+<script src="phonegap/phonegap-1.4.1.js"></script>
+ 
+</head>
+ 
+  <script> 
+    // 等待加载PhoneGap  
+    document.addEventListener("deviceready", onDeviceReady, false);  
+      
+    // PhoneGap加载完毕  
+    function onDeviceReady() {  
+        var element = document.getElementById('deviceProperties');  
+      
+        element.innerHTML = 'Device Name: '     + device.name     + '<br />' +   
+                            'Device PhoneGap: ' + device.phonegap + '<br />' +   
+                            'Device Platform: ' + device.platform + '<br />' +   
+                            'Device UUID: '     + device.uuid     + '<br />' +   
+                            'Device Version: '  + device.version  + '<br />';  
+    }  
+  
+</script>  
+</head>  
+<body>  
+    <p id="deviceProperties">Loading device properties...</p>  
+</body>  
+</html>

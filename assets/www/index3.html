@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>运维指标</title>
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+<link href="mobiscroll/mobiscroll-2.3.1.custom.min.css" rel="stylesheet"type="text/css" />
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.3.0.css" />
+<link rel="stylesheet" href="index.css" />
+
+<script src="jquery.mobile/jquery.js"></script>
+<script src="jquery.mobile/jquery.mobile-1.3.0.min.js"></script>
+<script src="jquery.mobile/jquery.jsonp-2.3.0.min.js"></script>
+<script type="text/javascript" src="scroll/iscroll.js"></script>
+<script type="text/javascript" src="scroll/scroll.js"></script>
+<script src="mobiscroll/mobiscroll-2.3.1.custom.min.js"type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+
+<script type="text/javascript" src="chart/DrawBase.js"></script>
+ <script type="text/javascript" src="chart/DrawLine.js"></script>
+ <script type="text/javascript" src="chart/DrawTime.js"></script>
+ <script type="text/javascript" src="chart/DrawLegend.js"></script>
+ <script type="text/javascript" src="chart/DrawXYTitle.js"></script>
+ <script type="text/javascript" src="chart/HtmlDraw.js"></script>
+ <script type="text/javascript" src="chart/DrawGriddingBase.js"></script>
+ 
+</head>
+<body>
+	<div data-role="page" id="host">
+
+		<div id="header" data-role="header" data-theme="b" data-position="fixed"><!-- data-position="fixed" -->
+			<h1 id="title">运维指标</h1>
+		</div>
+
+		<div data-role="content" id="content">
+			<div id="wrapper">
+				<div id="scroller">
+				
+					<ul data-role="listview" data-theme="d" data-divider-theme="d">
+				 
+						<li><a id="ibmgpu" data-transition="slide">IBM_GPU</a></li>
+						<li><a id="ibmh" data-transition="slide">IBM_H22</a></li>
+						<li><a href="#main?id=3" data-transition="slide">曙光_GPU</a></li>
+						<li><a href="#main?id=4" data-transition="slide">惠普集群</a></li>
+						<li><a href="#main?id=5" data-transition="slide">网络攻击</a></li>
+						<li><a href="#main?id=6" data-transition="slide">VPN使用记录</a></li>
+						<li><a href="#main?id=7" data-transition="slide">出口与专线</a></li>
+						<li><a href="#main?id=13" data-transition="slide">出口与专线月度统计</a></li>
+						<li><a href="#main?id=8" data-transition="slide">骨干线路流量统计(1)</a></li>
+						<li><a href="#main?id=14" data-transition="slide">骨干线路流量统计(2)</a></li>
+						<li><a href="#main?id=9" data-transition="slide">员工培训</a></li>
+						<li><a href="#main?id=10" data-transition="slide">综合业务</a></li>
+						<li><a href="#main?id=11" data-transition="slide">UPS指标</a></li>
+						<li><a href="#main?id=12" data-transition="slide">ERP指标</a></li>
+						<li><a href="#main?id=12" data-transition="slide">主机数据库</a></li>
+						<li><a href="#main?id=13" data-transition="slide">WEB服务指标</a></li> -->
+					</ul>
+				</div>
+				<!-- end scroller-->
+			</div>
+			<!-- endwrapper -->
+			
+			<script type="text/javascript">
+			
+	        //使用js跳页的脚本
+	        $("#ibmgpu").click(function(){
+	        	$.mobile.changePage( "index2.html#main?id=1",{
+					  transition: "slide",
+					  reverse: false,
+				});
+	        	
+	        	
+	        	
+	        });
+		      
+		      $("#ibmh").click(function(){
+		        	$.mobile.changePage( "index2.html#main?id=2",{
+						  transition: "slide",
+						  reverse: false,
+					});
+		        	
+		        	
+		        });
+			      
+		      
+			/* 页面跳转函数~
+			$.mobile.changePage( "index2.html#main",{
+					  transition: "slide",
+					  reverse: false,
+				});
+				  */
+ 
+		</script>
+		
+			<div data-role="popup" id="serverpop" class="ui-content"style="max-width: 280px">
+				<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<p id="popuptext">服务端错误！</p>
+			</div>
+			
+		</div>
+		<!-- end content-->
+
+		<div id="footer" data-role="footer" data-theme="b" data-position="fixed">
+			<h1>Copyright©litsoft</h1>
+		</div>
+	</div>
+	<div data-role="dialog" id="logout">
+	                <div data-role="content"data-theme="b">
+		                <span class="title">确定服务器是否打开?</span>
+		                <a href="#home" data-role="button" data-theme="c" data-rel="back">是</a>
+	               </div>
+	               
+	               <style>
+		                 span.title { display:block; text-align:center; margin-top:10px; margin-bottom:20px; }
+	                </style>
+               </div>
+
+
+	<!--one page -->
+	<div data-role="page" id="main">
+		<div data-role="header" id="head" data-theme="b" data-position="fixed">
+
+			<!-- <a  data-icon="arrow-l" id="show1"
+				data-transition="slide" data-iconpos="left" data-role="button">返回</a> -->
+			<!-- 在a标签里面设置data-rel=“back” 会使按钮忽略herf属性 -->
+			<h1 id="h1"></h1>
+			<a href="#rightpanel" data-transition="slide" data-icon="bars" id="show" 
+			
+			       class="ui-btn-right"        data-iconpos="right" >选择</a>
+		</div>
+		<!-- rightpanel1  -->
+		<div  data-role="panel" id="rightpanel" data-position="right"
+			   data-display="overlay" data-theme="b">
+
+			<ul data-role="listview" data-theme="d" data-divider-theme="c"
+				id="list" data-icon="false">
+			</ul>
+		</div>
+		<!-- /rightpanel1 -->
+		
+		<!-- rightpanel1  -->
+		  <div data-role="panel" id="leftpanel" data-position="left"
+			   data-display="overlay" data-theme="b">
+
+			<ul data-role="listview" data-theme="d"  data-divider-theme="c" data-icon="false">
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=81">IBM_GPU</a>
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=82">IBM_H22</a>
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=83">曙光_GPU</a>
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=84">惠普集群</a> 
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=85">网络攻击统计</a> 
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=86">VPN使用记录</a> 
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=87">出口与专线</a> 
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=813">出口与专线月度统计</a> 
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=88">骨干线路流量统计(1)</a> 
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=814">骨干线路流量统计(2)</a> 
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=89">员工培训系统应用指标</a>
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=810">综合业务系统应用指标</a>
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=811">UPS指标</a>
+				 <a class="litsoft_suo ui-link-inherit"  href="#main?id=812">ERP指标</a>
+				<!--  <a class="litsoft_suo ui-link-inherit"  href="#main?id=813">WEB服务指标</a>  -->
+<!-- 				 <a class="litsoft_suo ui-link-inherit"  href="#" data-rel="close" data-theme="c" data-icon="delete" data-inline="true">Close panel</a> 
+ -->			</ul>
+		</div> 
+		<!-- /rightpanel1 -->
+
+		<div data-role="content" id="content">
+			<!-- <canvas id="myCanvas" style="border: 1px solid #000000"> -->
+			  <canvas id="myCanvas">  
+         	             	 Your browser does not support the canvas element.
+            </canvas>
+            
+			<script>
+			
+			
+			$("#show1").click(function(){
+	        	$.mobile.changePage( "index2.html#host",{
+					  transition: "slide",
+					  reverse: false,
+				});
+	        	
+	        });
+			
+			
+			$( document ).on( "pageinit", "#main", function() {
+				 
+				$( document ).on( "swipeleft swiperight", "#main", function( e ) {
+					// We check if there is no open panel on the page because otherwise
+					// a swipe to close the left panel would also open the right panel (and v.v.).
+					// We do this by checking the data that the framework stores on the page element (panel: open).
+					if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
+						if ( e.type === "swipeleft"  ) {
+							$( "#rightpanel" ).panel( "open" );
+						} else if ( e.type === "swiperight" ) {
+							$( "#leftpanel" ).panel( "open" );
+						}
+					}
+				});
+			});
+			//pageinit 或是pagebeforechange
+			$(document).bind('pagebeforechange',function(e, data, options) {
+									if (typeof data.toPage !== "string") {
+										return;
+									}
+		                            var flag;
+                                    var gaoxingneng='<a class="litsoft_suo ui-link-inherit"  id="a">CPU、MEM、GPU指标</a> <a class="litsoft_suo ui-link-inherit"  id="b">网络接收网络发送指标</a> <a class="litsoft_suo ui-link-inherit" id="c">DR和DW指标</a>';
+									var params = getUrlParam(data.toPage);
+									var h = document.getElementById("h1");
+								
+									if (params.id == 1 || params.id == 81) {
+										flag==1;
+										h.innerHTML = "IBM_GPU";
+										if (params.id == 1) {
+											refresh("1");
+										} else if (params.id == 81) {
+											refresh1("1");
+										}
+										
+										var canvasString = gaoxingneng;
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											initline("2012-011112");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+											initline("2012-011122");
+											$("#rightpanel").panel("close");
+										});
+										$("#c").click(function() {
+											initline("2012-011132");
+											$("#rightpanel").panel("close");
+										});
+
+									} else if (params.id == 2 || params.id == 82) {
+										flag==2;
+										h.innerHTML = "IBM_H22";
+										if (params.id == 2) {
+											refresh("2");
+										} else if (params.id == 82) {
+											refresh1("2");
+										}
+										var canvasString = gaoxingneng;
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											initline("2012-011212");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+											initline("2012-011222");
+											$("#rightpanel").panel("close");
+										});
+										
+										$("#c").click(function() {
+											initline("2012-011232");
+											$("#rightpanel").panel("close");
+										});
+									} else if (params.id == 3 || params.id == 83) {
+										flag==3;
+										h.innerHTML = "曙光_GPU";
+										if (params.id == 3) {
+											refresh("3");
+										} else if (params.id == 83) {
+											refresh1("3");
+										}
+										var canvasString = gaoxingneng;
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											initline("2012-011312");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+											//alert("2012-01-01132");
+											initline("2012-011322");
+											$("#rightpanel").panel("close");
+										});
+										
+										$("#c").click(function() {
+											//alert("2012-01-01122");
+											initline("2012-011332");
+											$("#rightpanel").panel("close");
+										});
+										
+									} else if (params.id == 4 || params.id == 84) {
+										h.innerHTML = "惠普集群";
+										if (params.id == 4) {
+											refresh("4");
+										} else if (params.id == 84) {
+											refresh1("4");
+										}
+
+										var canvasString = gaoxingneng;
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											initline("2012-011412");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+											initline("2012-011422");
+											$("#rightpanel").panel("close");
+										});
+										$("#c").click(function() {
+											initline("2012-011432");
+											$("#rightpanel").panel("close");
+										});
+									} else if (params.id == 5 || params.id == 85) {
+										h.innerHTML = "网络攻击统计";
+										if (params.id == 5) {
+											refresh("5");
+										} else if (params.id == 85) {
+											refresh1("5");
+										}
+										$('#list').empty();
+										
+									} else if (params.id == 6 || params.id == 86) {
+										h.innerHTML = "VPN使用记录";
+										if (params.id == 6) {
+											refresh("6");
+										} else if (params.id == 86) {
+											refresh1("6");
+										}
+										  var canvasString = '<a class="litsoft_suo ui-link-inherit"  id="a">用户数和连接数</a> <a class="litsoft_suo ui-link-inherit"  id="b">网络流量</a>';
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function(){
+											initline("2012-011612");
+											$("#rightpanel").panel("close");
+										  });
+										  
+										 $("#b").click(function(){
+											 initline("2012-011622");
+											$("#rightpanel").panel("close");
+										  });  
+									} else if (params.id == 7 || params.id == 87) {
+										h.innerHTML = "区域中心45M";
+										if (params.id == 7) {
+											refresh("7");
+										} else if (params.id == 87) {
+											refresh1("7");
+										}
+										var canvasString = '<a class="litsoft_suo ui-link-inherit" id="a">区域中心45M</a> <a class="litsoft_suo ui-link-inherit"  id="b">区域中心8M</a> <a class="litsoft_suo ui-link-inherit"  id="c">同城千兆</a> <a class="litsoft_suo ui-link-inherit"  id="d">电信100M</a> <a class="litsoft_suo ui-link-inherit"  id="e">电信100M互联</a> <a class="litsoft_suo ui-link-inherit"  id="f">石勘院</a> <a class="litsoft_suo ui-link-inherit"  id="g">移动10M</a> ';
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											h.innerHTML = "区域中心45M";
+											initline("2012-01-011713");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+											h.innerHTML = "区域中心8M";
+											initline("2012-01-011723");
+											$("#rightpanel").panel("close");
+										});
+										
+										$("#c").click(function() {
+											h.innerHTML = "同城千兆";
+											initline("2012-01-011733");
+											$("#rightpanel").panel("close");
+										});
+										
+										$("#d").click(function() {
+											h.innerHTML = "电信100M";
+											initline("2012-01-011743");
+											$("#rightpanel").panel("close");
+										});
+										
+										$("#e").click(function() {
+											h.innerHTML = "电信100M互联";
+											initline("2012-01-011753");
+											$("#rightpanel").panel("close");
+										});
+										$("#f").click(function() {
+											h.innerHTML = "石勘院";
+											initline("2012-01-011763");
+											$("#rightpanel").panel("close");
+										});
+										$("#g").click(function() {
+											h.innerHTML = "移动10M";
+											initline("2012-01-011773");
+											$("#rightpanel").panel("close");
+										});
+										
+										
+									} else if (params.id == 8 || params.id == 88) {
+										h.innerHTML = "出口交换机";
+										if (params.id == 8) {
+											refresh("8");
+										} else if (params.id == 88) {
+											refresh1("8");
+										}
+										
+										 var canvasString = '<a class="litsoft_suo ui-link-inherit"  id="a">出口交换机</a> <a class="litsoft_suo ui-link-inherit"   id="b">生产网交换机</a><a class="litsoft_suo ui-link-inherit"   id="c">ZWLJ</a><a class="litsoft_suo ui-link-inherit"   id="d">WLJ1</a><a class="litsoft_suo ui-link-inherit"   id="e">WLJ2</a><a class="litsoft_suo ui-link-inherit"   id="f">WLJ3</a><a class="litsoft_suo ui-link-inherit"   id="g">5HC</a>';
+										 $('#list').empty();
+										 $(canvasString).appendTo('#list');
+										 $("#a").click(function(){
+											h.innerHTML = "出口交换机";
+											initline("2012-01-011813");
+											$("#rightpanel").panel("close");
+										  });
+										  
+										 $("#b").click(function(){
+											 h.innerHTML = "生产网交换机";
+											 initline("2012-01-011823");
+											$("#rightpanel").panel("close");
+										  }); 
+										 $("#c").click(function(){
+											 h.innerHTML = "ZWLJ";
+											 initline("2012-01-011833");
+											$("#rightpanel").panel("close");
+										  });
+										 $("#d").click(function(){
+											  h.innerHTML = "WLJ1";
+											  initline("2012-01-011843");
+											 $("#rightpanel").panel("close");
+										  });
+										 $("#e").click(function(){
+											  h.innerHTML = "WLJ2";
+											 initline("2012-01-011853");
+											$("#rightpanel").panel("close");
+										  });
+										 $("#f").click(function(){
+											  h.innerHTML = "WLJ3";
+											 initline("2012-01-011863");
+											$("#rightpanel").panel("close");
+										  });
+										 $("#g").click(function(){
+											  h.innerHTML = "5HC";
+											 initline("2012-01-011873");
+											$("#rightpanel").panel("close");
+										  });
+
+									}else if(params.id == 14 || params.id == 814){
+										h.innerHTML = "6HC";
+										if (params.id == 14) {
+											refresh("e");
+										} else if (params.id == 814) {
+											refresh1("e");
+										}
+										var canvasString = '<a class="litsoft_suo ui-link-inherit"  id="a">6HC</a> <a class="litsoft_suo ui-link-inherit"   id="b">服务器</a><a class="litsoft_suo ui-link-inherit"   id="c">安防中心</a><a class="litsoft_suo ui-link-inherit"   id="d">食堂</a><a class="litsoft_suo ui-link-inherit"   id="e">无限控制器</a><a class="litsoft_suo ui-link-inherit"   id="f">JKZX</a>';
+										 $('#list').empty();
+										 $(canvasString).appendTo('#list');
+										 $("#a").click(function(){
+											  h.innerHTML = "6HC";
+											initline("2012-01-011813");
+											$("#rightpanel").panel("close");
+										  });
+										  
+										 $("#b").click(function(){
+											  h.innerHTML = "服务器";
+											 initline("2012-01-011823");
+											$("#rightpanel").panel("close");
+										  }); 
+										 $("#c").click(function(){
+											  h.innerHTML = "安防中心";
+											 initline("2012-01-011833");
+											$("#rightpanel").panel("close");
+										  });
+										 $("#d").click(function(){
+											  h.innerHTML = "食堂";
+											 initline("2012-01-011843");
+											$("#rightpanel").panel("close");
+										  });
+										 $("#e").click(function(){
+											  h.innerHTML = "无线控制器";
+											 initline("2012-01-011853");
+											$("#rightpanel").panel("close");
+										  });
+										 $("#f").click(function(){
+											  h.innerHTML = "JKZX";
+											  initline("2012-01-011863");
+											$("#rightpanel").panel("close");
+										  });
+										
+									} else if (params.id == 9 || params.id == 89) {
+										h.innerHTML = "员工培训系统应用指标";
+										if (params.id == 9) {
+											refresh("9");
+										} else if (params.id == 89) {
+											refresh1("9");
+										}
+										
+										var canvasString = '<a class="litsoft_suo ui-link-inherit"   id="a">用户登录和培训人数和自主学习</a> <a class="litsoft_suo ui-link-inherit"   id="b">综合</a> <a class="litsoft_suo ui-link-inherit" href="#" id="c">培训班</a>';
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											initline("20121911");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+											initline("2012-011922");
+											$("#rightpanel").panel("close");
+										});
+										$("#c").click(function() {
+											initline("2012-011932");
+											$("#rightpanel").panel("close");
+										});
+									} else if (params.id == 10 || params.id == 810) {
+										h.innerHTML = "综合业务系统应用指标";
+										if (params.id == 10) {
+											refresh("a");
+										} else if (params.id == 810) {
+											refresh1("a");
+										}
+										var canvasString = '<a class="litsoft_suo ui-link-inherit"   id="a">用户登录</a> <a class="litsoft_suo ui-link-inherit"   id="b">工作安排和工作请示</a><a class="litsoft_suo ui-link-inherit" href="#" id="c">工作计划和工作总结</a><a class="litsoft_suo ui-link-inherit" href="#" id="d">月度计划月度总结</a> <a class="litsoft_suo ui-link-inherit" href="#" id="e">财务审批零购</a> <a class="litsoft_suo ui-link-inherit" href="#" id="f">短信发送</a> <a class="litsoft_suo ui-link-inherit" href="#" id="g">系统升级</a> <a class="litsoft_suo ui-link-inherit" href="#" id="h">系统存储</a> <a class="litsoft_suo ui-link-inherit" href="#" id="i">用户维护</a> <a class="litsoft_suo ui-link-inherit" href="#" id="j">用户培训</a>';
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											initline("20121a11");
+											$("#rightpanel").panel("close");
+										});
+										$("#b").click(function() {
+											initline("20121a21");
+											$("#rightpanel").panel("close");
+										});
+										$("#c").click(function() {
+											initline("20121a31");
+											$("#rightpanel").panel("close");
+										});
+										$("#d").click(function() {
+											initline("20121a41");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#e").click(function() {
+											initline("20121a51");
+											$("#rightpanel").panel("close");
+										});
+										$("#f").click(function() {
+											initline("20121a61");
+											$("#rightpanel").panel("close");
+										});
+										$("#g").click(function() {
+											initline("20121a71");
+											$("#rightpanel").panel("close");
+										});
+										$("#h").click(function() {
+											initline("20121a81");
+											$("#rightpanel").panel("close");
+										});
+										$("#i").click(function() {
+											initline("20121a91");
+											$("#rightpanel").panel("close");
+										});
+										$("#j").click(function() {
+											initline("20121a01");//倒数第二个0表示第10
+											$("#rightpanel").panel("close");
+										});
+									} else if (params.id == 11 || params.id == 811) {
+										h.innerHTML = "总耗电量";
+										if (params.id == 11) {
+											refresh("b");
+										} else if (params.id == 811) {
+											refresh1("b");
+										}
+										var canvasString = '<a class="litsoft_suo ui-link-inherit"   id="a">总耗电量</a> <a class="litsoft_suo ui-link-inherit"  id="b">空调</a> <a class="litsoft_suo ui-link-inherit"  id="c">照明及其他用电</a> <a class="litsoft_suo ui-link-inherit"  id="d">UPS输出</a> <a class="litsoft_suo ui-link-inherit"  id="e">PUE</a>';
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											h.innerHTML = "总耗电量";
+											initline("2012-01-011b13");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+											h.innerHTML = "空调";
+											initline("2012-01-011b23");
+											$("#rightpanel").panel("close");
+										});
+										$("#c").click(function() {
+											h.innerHTML = "照明及其他用电";
+											initline("2012-01-011b33");
+											$("#rightpanel").panel("close");
+										});
+										$("#d").click(function() {
+											h.innerHTML = "UPS输出";
+											initline("2012-01-011b43");
+											$("#rightpanel").panel("close");
+										});
+										$("#e").click(function() {
+											h.innerHTML = "PUE";
+											initline("2012-01-011b53");
+											$("#rightpanel").panel("close");
+										});
+									} else if (params.id == 12 || params.id == 812) {
+										h.innerHTML = "ERP";
+										if (params.id == 12) {
+											refresh("c");
+										} else if (params.id == 812) {
+											refresh1("c");
+										}
+										var canvasString = '<a class="litsoft_suo ui-link-inherit"  id="a">会计凭证</a> <a class="litsoft_suo ui-link-inherit"  id="b">财企直连</a> <a class="litsoft_suo ui-link-inherit" id="c">MRO采购</a> <a class="litsoft_suo ui-link-inherit" id="d">其他</a> <a class="litsoft_suo ui-link-inherit" id="e">软件安装和用户维护</a>';
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+										$("#a").click(function() {
+											initline("20121c11");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+											initline("20121c21");
+											$("#rightpanel").panel("close");
+										});
+										$("#c").click(function() {
+											initline("20121c31");
+											$("#rightpanel").panel("close");
+										});
+										$("#d").click(function() {
+											initline("20121c41");
+											$("#rightpanel").panel("close");
+										});
+										$("#e").click(function() {
+											initline("20121c51");
+											$("#rightpanel").panel("close");
+										});
+										
+									} else if (params.id == 13 || params.id == 813) {
+										h.innerHTML = "区域中心8M月度统计";
+										if (params.id == 13) {
+											refresh("d");
+										} else if (params.id == 813) {
+											refresh1("d");
+										}
+										var canvasString = '<a class="litsoft_suo ui-link-inherit"  id="a">区域中心8M月度统计</a> <a class="litsoft_suo ui-link-inherit"  id="b">区域中心45M月度统计</a> <a class="litsoft_suo ui-link-inherit"  id="c">电信宽带月度统计</a> <a class="litsoft_suo ui-link-inherit"  id="d">电信互联月度统计</a>';
+										$('#list').empty();
+										$(canvasString).appendTo('#list');
+
+										$("#a").click(function() {
+												h.innerHTML = "区域中心8M月度统计";
+											initline("20121d11");
+											$("#rightpanel").panel("close");
+										});
+
+										$("#b").click(function() {
+												h.innerHTML = "区域中心45M月度统计";
+											initline("20121d21");
+											$("#rightpanel").panel("close");
+										});
+										
+										$("#c").click(function() {
+												h.innerHTML = "电信宽带月度统计";
+											initline("20121d31");
+											$("#rightpanel").panel("close");
+										});
+										
+										$("#d").click(function() {
+											h.innerHTML = "电信互联月度统计";
+											initline("20121d41");
+											$("#rightpanel").panel("close");
+										});
+										
+									}
+								});
+			
+				//获得请求数据url后面的参数
+				//id=34&key=perfect&action=go&shd=980
+				function getUrlParam(string) {
+					var obj = {};
+					if (string.indexOf("?") != -1) {
+						var string = string.substr(string.indexOf("?") + 1);
+						var strs = string.split("&");
+						for ( var i = 0; i < strs.length; i++) {
+							var tempArr = strs[i].split("=");
+							obj[tempArr[0]] = unescape(tempArr[1]);
+						}
+					}
+					return obj;
+				}
+				
+				//在主界面第一次请求数据时 调用的刷新图的方法
+				function refresh(t) {
+					//$("#leftpanel").panel("close");
+					//2012-07-01 1111倒数第四个“1” 表示第一次请求数据
+					//倒数第三个“1”表示哪一个指标，根据列表中的顺序
+					//倒数第二个"1"表示在一个指标中分了那几个类图
+					//倒数第一个数字表示表的样式 1 表示按年查看  2表示按月查看  3 表示按天查看
+					//这是第一次请求数据所以这个日期没有意义
+
+					switch (t) {
+					case "1":
+						//IBM_GPU
+						initline("2013-011" + t + "12");
+						break;
+					case "2":
+						//ibm_h22
+						initline("2013-011" + t + "12");
+						break;
+					case "3":
+						//曙光 _Gpu
+						initline("2013-011" + t + "12");
+						break;
+					case "4":
+						//惠普集群
+						initline("2013-011" + t + "12");
+						break;
+					case "5":
+						//网络攻击统计
+						initline("2013-011" + t + "12");
+						break;
+					case "6":
+						//vpn
+						initline("2013-011" + t + "12");
+						break;
+					case "7":
+						//出口与专线流量统计
+						initline("2013-01-011" + t + "13");
+						break;
+					case "8":
+						//骨干线路(1)
+						initline("2013-01-011" + t + "13");
+						break;
+					case "9":
+						//员工培训系统应用指标
+						initline("20121" + t + "11");
+						break;
+					case "a":
+						//综合业务系统应用指标
+						initline("20121" + t + "11");
+						break;
+					case "b":
+						//UPS指标
+						initline("2013-01-011" + t + "13");
+						break;
+					case "c":
+						//ERP
+						initline("20121" + t + "11");
+						break;
+					case "d":
+						//出口与专线月度统计
+						initline("20121" + t + "11");
+						break;
+					case "e":
+						//骨干流量(2)
+						initline("2013-01-011" + t + "13");
+						break;
+					default:
+						alert("数据出错了");
+					}
+				}
+				
+				//在显示图形界面 通过左边的panel导航的方式第一次请求数据的时候调用的刷新图的方法
+				//刷新完要关闭panel
+				function refresh1(t) {
+					$("#leftpanel").panel("close");
+					switch (t) {
+					case "1":
+						//IBM_GPU
+						initline("2013-011" + t + "12");
+						break;
+					case "2":
+						//ibm_h22
+						initline("2013-011" + t + "12");
+						break;
+					case "3":
+						//曙光 _Gpu
+						initline("2013-011" + t + "12");
+						break;
+					case "4":
+						//惠普集群
+						initline("2013-011" + t + "12");
+						break;
+					case "5":
+						//网络攻击统计
+						initline("2013-011" + t + "12");
+						break;
+					case "6":
+						//vpn
+						initline("2012-011" + t + "12");
+						break;
+					case "7":
+						//出口与专线流量统计
+						initline("2012-01-011" + t + "13");
+						break;
+					case "8":
+						//骨干流量(1)
+						initline("2012-01-011" + t + "13");
+						break;
+					case "9":
+						//员工培训系统应用指标
+						initline("20121" + t + "11");
+						break;
+					case "a":
+						//综合业务系统应用指标
+						initline("20121" + t + "11");
+						break;
+					case "b":
+						//UPS指标
+						initline("2013-01-011" + t + "13");
+						break;
+					case "c":
+						//ERP
+						initline("20121" + t + "11");
+						break;
+					case "d":
+						//出口和专线月度统计
+						initline("20121" + t + "11");
+						break;
+					case "e":
+						//骨干流量(2)
+						initline("2012-01-011" + t + "13");
+						break;
+					default:
+						alert("数据出错了");
+
+					}
+				}
+			</script>
+
+			<!-- popup   当请求的数据不存在的时候 给出提示data-icon="delete" data-theme="a"-->
+			 
+			<div data-role="popup" id="nodatapop" class="ui-content"style="max-width: 280px">
+				<p id="popuptext">没有数据了！</p>
+			</div>
+			<div data-role="popup" id="netpop" class="ui-content"style="max-width: 280px">
+				<p id="popuptext">此应用需要连接网络才能使用！</p>
+			</div>
+		</div>
+		<div data-role="footer" id="foot" data-theme="b" data-position="fixed">
+			<h1 >Copyright©litsoft</h1>
+		</div>
+	</div>
+	
+	<!--在第一页加载完后对画布初始化and尝试和服务端进行通信-->
+
+	<script type="text/javascript">
+	     var h = document.getElementById("h1");
+	     h.innerHTML = "IBM_GPU";
+		 initline("2013-011112");
+	</script>
+</body>
+</html>

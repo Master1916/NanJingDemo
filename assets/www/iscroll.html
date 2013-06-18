@@ -1,0 +1,163 @@
+<!DOCTYPE html> 
+<head>
+<meta charset="utf-8">
+	<title>运维指标</title> 
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+<link rel="stylesheet" href="index.css" />
+<script src="jquery.mobile/jquery-1.7.2.min"></script>
+<script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+
+<script type="text/javascript" src="scroll/iscroll.js?v3.7.1"></script>
+
+<script type="text/javascript">
+var myScroll;
+var a = 0;
+function loaded() {
+	setHeight();	// Set the wrapper height. Not strictly needed, see setHeight() function below.
+
+	// Please note that the following is the only line needed by iScroll to work. Everything else here is to make this demo fancier.
+	myScroll = new iScroll('scroller', {desktopCompatibility:true});
+}
+
+// Change wrapper height based on device orientation. Not strictly needed by iScroll, you may also use pure CSS techniques.
+function setHeight() {
+	 
+	var headerH = document.getElementById('header').offsetHeight,
+		  footerH = document.getElementById('footer').offsetHeight,
+		  wrapperH = window.innerHeight - headerH - footerH;
+	document.getElementById('wrapper').style.height = wrapperH + 'px';
+}
+
+// Check screen size on orientation change
+window.addEventListener('onorientationchange' in window ? 'orientationchange' : 'resize', setHeight, false);
+
+// Prevent the whole screen to scroll when dragging elements outside of the scroller (ie:header/footer).
+// If you want to use iScroll in a portion of the screen and still be able to use the native scrolling, do *not* preventDefault on touchmove.
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+// Load iScroll when DOM content is ready.
+document.addEventListener('DOMContentLoaded', loaded, false);
+</script>
+
+<style type="text/css" media="all">
+body,ul,li {
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+body {
+	font-size:12px;
+	-webkit-user-select:none;
+    -webkit-text-size-adjust:none;
+	font-family:helvetica;
+/*	padding-bottom:44px;	/*	This prevents the scroller to lock if the user swipes down outside of the screen.
+							 	NOT needed if in home screen mode and on Android. */
+}
+
+#header {
+	width:100%;
+	height:45px;
+	line-height:45px;
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #fe96c9), color-stop(0.05, #d51875), color-stop(1, #7b0a2e));
+	padding:0;
+	color:#eee;
+	font-size:20px;
+	text-align:center;
+}
+ 
+ 
+#wrapper {
+	height:200px;		/* Of course you need to specify the object height */
+
+	position:relative;	/* On older OS versions "position" and "z-index" must be defined (absolute | relative), */
+	z-index:1;			/* it seems that recent webkit is less picky and works anyway. */
+
+	width:100%;
+	background:#aaa;
+	overflow:hidden;
+	padding:0;
+	margin:0;
+}
+
+#scroller {
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+
+	float:left;
+	width:100%;
+	padding:0;
+
+/*	-webkit-box-shadow:0 0 8px #555;	/* Don't use box shadows, they slow down drastically CSS animations */
+}
+
+#scroller ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	text-align:left;
+}
+
+#scroller li {
+	padding:0 10px;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ccc;
+	border-top:1px solid #fff;
+	background-color:#fafafa;
+	font-size:14px;
+}
+
+#scroller li > a {
+	display:block;
+}
+</style>
+</head>
+<body>
+<div data-role="page" id="host">
+	
+<div data-role="header" id="header">yunweizhibiao</div>
+
+<div data-role="content" id="wrapper">
+	<div id="scroller">
+		<ul>
+			  <li data-role="list-divider">网络 </li>
+				<li><a href="net.html" data-transition="slide">区域中心</a></li>
+				<li><a href="index.html">卫岗同城</a></li>
+				<li><a href="index.html">电信100M</a></li>
+				<li><a href="index.html">移动10M</a></li>
+				<li><a href="index.html">电信10M</a></li>
+				<li><a href="index.html">石勘院专线</a></li>
+				
+				<li data-role="list-divider">高性能</li>
+				<li><a href="index.html">IBM GPU</a></li>
+				<li><a href="index.html">IBM H22</a></li>
+				<li><a href="index.html">惠普集群</a></li>
+				<li><a href="index.html">曙光 GPU</a></li>
+				
+				<li data-role="list-divider">主机</li>
+				<li><a href="index.html">主机</a></li>
+				 
+				<li data-role="list-divider">综合应用</li>
+				
+				<li><a href="index.html">日常工作</a></li>
+				<li><a href="index.html">审批节点</a></li>
+				<li data-role="list-divider">病毒</li>
+				
+				<li><a href="index.html">网络攻击统计</a></li>
+		
+		</ul>
+	</div><!--end scroller -->
+	
+</div><!--end wrapper -->
+
+	<div id="footer" data-role="footer" data-position="fixed" data-theme="b">
+			 <h1>CopyRight©litsoft </h1>
+	</div>
+
+</div>
+</body>
+</html>

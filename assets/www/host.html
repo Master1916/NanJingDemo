@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>主机</title>
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+<link rel="stylesheet" href="index.css" />
+<script src="jquery.mobile/jquery-1.7.2.min"></script>
+<script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="chart/linechart.js"></script>
+<script type="text/javascript" charset="utf-8" src="chart/barchart.js"></script>
+<script type="text/javascript" charset="utf-8" src="chart/piechart.js"></script>
+
+<script>
+   $(function() {
+                var canvasContext;
+                resizeCanvas();
+                $(window).resize(function() { resizeCanvas() });
+                  
+                function resizeCanvas()
+                {
+                    var w = window.innerWidth / 1.2;
+                    var h = window.innerHeight / 1.2;
+                    
+                   //  alert(window.innerHeight);
+                    var canvasString = '<canvas id="mainCanvas" width="' + w + '" height="' + h + '">Canvas is not supported</canvas>';
+                     
+                    $('#contentholder').empty();
+                    $(canvasString).appendTo('#contentholder');
+                    canvasContext = $('#mainCanvas').get(0).getContext('2d'); 
+                                         
+                    $('#mainCanvas').bind('tap', function(event){
+                        touchX = event.pageX;
+                        touchY = event.pageY;
+                        if(touchX > 400 && touchX < 500 && touchY > 130 && touchY < 160){
+                        	canvasContext.fillStyle="#0f0";
+                            canvasContext.fillRect(touchX - 75, touchY - 50, 50, 50);
+                            
+                            canvasContext.font = "20pt Arial";              
+                            canvasContext.fillText("X: " + touchX + " Y: " + touchY, touchX, touchY);	
+                        }
+                        
+                    });
+                }               
+            });
+            </script>
+
+    <style>
+      #mainCanvas
+      {
+        background-color: #000;
+        border: solid 3px #0F0;
+      }
+      body
+      {
+        background: #000;
+      }
+      #contentholder
+      {
+        width: 99%;
+        height: 99%;
+        margin: 0 auto;
+        text-align: center;
+      }
+     </style>
+  
+<body>
+    <div  data-role="page"> 
+        <div data-role="header">
+        <h1>header</h1>
+         </div> 
+        <div data-role="content"><div id="contentholder">
+        
+        
+        
+        </div></div> 
+        <div data-role="footer">
+       <h1>footer</h1>
+       </div> 
+       </div>
+</body>
+
+
+
+
+
+

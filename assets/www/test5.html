@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>测试</title>
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.3.0.min.css" />
+
+<script src="jquery.mobile/jquery.js"></script>
+
+<script src="chart/DataBase.js"></script>
+
+<script src="jquery.mobile/jquery.mobile-1.3.0.min.js"></script>
+ 
+
+</head>
+
+<body>
+
+	<div data-role="page" id="page" data-theme="b">
+		<div data-role="header" id=header data-theme="b">
+			<h1 id="head">test</h1>
+		</div>
+		<div data-role="content">
+		   <!--  <canvas id="myCanvas" style="border: 1px solid #c3c3c3;">
+          	 Your browser does not support the canvas element.
+      		</canvas> -->
+      		 <script>
+      		 var url="http://10.1.40.232:8080/importExcel/ibmgpu!queryibmGpuList.action?time=2012-01-01&times=1";
+      			 
+      		 var dataBase = new DataBase();
+      		 dataBase.getData(url);
+      		 
+      		
+      		</script>
+      		
+		</div>
+		<div data-role="footer"  data-theme="b">
+			<h1>footer</h1>
+		</div>
+	</div>
+	
+	
+	
+	
+</body>
+</html>
+

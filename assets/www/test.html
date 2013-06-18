@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>测试</title>
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+<script src="jquery.mobile/jquery-1.7.2.min"></script>
+<script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+
+</head>
+
+
+<style type="text/css" media="all">
+#myCanvas {
+    width:screen.width*2;
+    height:screen.height;
+   
+}
+</style>
+<body>
+	<div data-role="page">
+		<div data-role="header">
+			<h1>header</h1>
+		</div>
+		<div data-role="content">
+			 <a href="#main?id=1" data-role="button"> 跳转</a>
+			 <a href="#main?id=2" data-role="button"> 跳转</a>
+			 <a href="#main?id=3" data-role="button"> 跳转</a>
+			 
+			 
+		</div>
+		<div data-role="footer">
+			<h1>footer</h1>
+		</div>
+	</div>
+	<!-- test PAGE -->
+		<div data-role="page" id="main">
+		<div data-role="header">
+			<h1>header</h1>
+		</div>
+		<div data-role="content">
+		<script>
+		start();
+		function start(){
+			String s="2012年1月第一个周";
+			time=s.substring(0,4);
+			alert(time);
+		}
+		
+		
+		
+		
+		$(document).bind('pagebeforechange',function(e,data,options){  
+		     if (typeof data.toPage !== "string"){  
+		        return;  
+		} 
+		    var params = getUrlParam(data.toPage); 
+		    //alert( params.id);
+		    if(params.id==1){
+		    	alert( params.id);
+		    }else if(params.id==2){
+		    	alert( params.id);
+		    }else if(params.id==3){
+		    	alert( params.id);
+		    }
+		   /*  for(var i=0;i<params.length;i++){
+		    	  // alert(params[i]);
+		    } */
+		});  
+		  //id=34&key=perfect&action=go&shd=980
+		function getUrlParam(string) {  
+		    var obj = {};  
+		    if (string.indexOf("?") != -1) {
+		 
+	        var string = string.substr(string.indexOf("?") + 1);  
+	        var strs = string.split("&");  
+	        for(var i = 0; i < strs.length; i ++) { 
+	        	 
+	            var tempArr = strs[i].split("="); 
+	            obj[tempArr[0]] = unescape(tempArr[1]);  
+	        }  
+	    }    
+		 
+		    return obj;  
+		}  
+		</script>
+			 <div>
+			 	<ul>......</ul>
+			 </div>	 
+		</div>
+		
+		<div data-role="footer">
+			<h1>footer</h1>
+		</div>
+		
+	</div>
+</body>
+</html>
+

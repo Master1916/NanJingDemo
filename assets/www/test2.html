@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+    <script type="text/javascript">
+    function swapButton() {
+      $('#button').attr('data-icon', 'check').text('Done').trigger('create');
+      $('#header').trigger('create');
+    }
+    </script>
+  </head>
+  <body>
+    <div data-role="page">
+      <div data-role="header" data-position="fixed" id="header">
+        <a data-icon="delete" id="button" onclick="swapButton()">Delete</a>
+        <h1>Test Page</h1>
+      </div>
+      <div data-role="content">
+        <p>Click on Delete to get Done button</p>
+      </div>
+    </div>
+  </body>
+</html>

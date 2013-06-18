@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>运维指标</title>
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1, maximum-scale=1">
+<!-- 加载css和js -->
+<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.3.0.min.css" />
+
+<script src="jquery.mobile/jquery-1.7.2.min"></script>
+<script src="jquery.mobile/jquery.mobile-1.3.0.min.js"></script>
+<script src="phonegap/phonegap-1.4.1.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	//$(this).data('theme','e');
+	
+	//$('#main').css('data-theme', 'e');
+	
+	//$('#body').trigger("pageshow");
+	
+	$('#togetherday').click(function(){
+		 // alert("zheshiy");
+		  //$('#main').attr('data-theme', 'c').trigger('create');
+		  
+		 	var oT = $(this).attr('data-theme'); // old theme
+		 	 //alert(oT);
+           //var nT = (oT == 'b' ? 'e' : 'b'); // new theme
+          	var nT='a';
+           
+          	if(oT == 'a'){
+          	   		nT = 'b';
+          	  		oT = 'b';
+          	}else if( oT == 'b'){
+          		 	nT = 'c';
+          			oT = 'c';
+          	}else if( oT == 'c'){
+          		 	nT = 'd';
+          			oT = 'd';
+          	}else if( oT == 'd'){
+          		 	nT = 'e';
+          			oT = 'e';
+          	}else if(oT=='e'){
+          		    
+          		 window.location.reload();
+          		//$.mobile.loadPage("test3.html");
+          	} 
+ 
+       		  $(this).removeClass('ui-btn-up-' + oT).addClass('ui-btn-up-' + nT).attr('data-theme', nT);
+			//  $(this).parent('div').parent('div').parent('div').removeClass('ui-btn-hover-' + oT).addClass('ui-btn-hover-' + nT).removeClass('ui-btn-up-' + oT).addClass('ui-btn-up-' + nT).attr('data-theme', nT);
+			 // $(this).parent('div').removeClass('ui-btn-hover-' + oT).addClass('ui-btn-hover-' + nT).removeClass('ui-btn-up-' + oT).addClass('ui-btn-up-' + nT).attr('data-theme', nT);
+			// $(this).removeClass('ui-btn-hover-' + oT).addClass('ui-btn-hover-' + nT).removeClass('ui-btn-up-' + oT).addClass('ui-btn-up-' + nT).attr('data-theme', nT);
+			  $("div[data-role='header']").removeClass('ui-btn-hover-' + oT).addClass('ui-btn-hover-' + nT).removeClass('ui-btn-up-' + oT).addClass('ui-btn-up-' + nT).attr('data-theme', nT);
+			  $("div[data-role='footer']").removeClass('ui-btn-hover-' + oT).addClass('ui-btn-hover-' + nT).removeClass('ui-btn-up-' + oT).addClass('ui-btn-up-' + nT).attr('data-theme', nT);
+			 
+			//$.mobile.buttonMarkup.hoverDelay = 0;
+			//$(this).buttonMarkup({theme: nT});
+			
+			//$("div[data-role='footer']").text('Done'); 可以动态的改变标签上个的文字
+			//$("div[data-role='footer']").buttonMarkup({theme: nT});
+			 
+		  	//$("div[data-role='footer']").button('refresh');
+			
+			//$(this).button('refresh');
+			//$("div[data-role='header']").buttonMarkup({theme: nT}).trigger("create");
+			 
+			//$("div[data-role='header']").buttonMarkup({ data-inline: "true" });
+			//$("div[data-role='header']").buttonMarkup({ corners: "false" }).trigger("create");
+			//$("div[data-role='header']").data('theme', nT);
+	  });
+	});
+	
+	
+</script>
+</head>
+<body id="body">
+	<div data-role="page" id="main" >
+		<div data-role="header" data-position="fixed">
+			<h1>测试</h1>
+		</div>
+		<div data-role="content" id="wrapper">
+			<div class="ui-body">
+				<a href="#" data-role="button" data-inline="true"
+					data-iconpos="left" id="togetherday">点击切换主题</a>  
+			</div> 
+			
+			<canvas id="myCanvas" width="578" height="400"></canvas>
+         	              
+             <script>
+            	 var canvas = document.getElementById("myCanvas");
+            	 var context = canvas.getContext("2d");
+            	 var imageObj = new Image();
+					
+            	 imageObj.onload = function() {
+            	 	context.drawImage(imageObj, 0, 0,13,15);
+            	 };
+            	 imageObj.src = "image/left.png";
+            	 
+            	 
+             </script>
+			
+		</div>
+		<div data-role="footer"   data-position="fixed">
+			<h1>Copyright©litsoft</h1>
+		</div>
+	</div>
+</body>
+</html>
